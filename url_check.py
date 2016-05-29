@@ -5,8 +5,8 @@ from urllib.error import URLError, HTTPError
 
 
 def url_check(url):
-    req = Request(url)
     try:
+        req = Request(url)
         response = urlopen(req)
         status = response.status
         if status == 200:
@@ -16,12 +16,13 @@ def url_check(url):
     except HTTPError as he:
         return "NG", he.code
     except URLError as ue:
-        return "NG", ue.reason
-
+        return "NG", str(ue.reason)
+    except Exception as e:
+        return "NG", str(e)
 
 if __name__ == "__main__":
     # target = "http://yahoo.co.jp"
-    # target = "http://yahoohoageagagaega.co.jp"
-    target = "http://www.python.org/fish.html"
+    target = "http://yahoohoageagagaega.co.jp"
+    # target = "http://www.python.org/fish.html"
     result = url_check(target)
     print(result)
